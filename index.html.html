@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>애드리절트 업무 링크</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%94%97</text></svg>">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+<style>
+  :root {
+    --bg: #F6F5F1;
+    --surface: #FFFFFF;
+    --ink: #232323;
+    --muted: #6E6D66;
+    --accent: #2F5D50;
+    --accent-soft: #E4ECE9;
+    --gold: #B08A3E;
+    --border: #E4E1D8;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Noto Sans KR', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 56px 24px 24px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h1 {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    margin: 0 0 4px;
+  }
+
+  header p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  #search {
+    width: 220px;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  #search:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    border-color: var(--accent);
+  }
+
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 8px 24px 80px;
+  }
+
+  section.category {
+    margin-top: 40px;
+  }
+
+  h2 {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  ul.links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li.link-row a {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 12px 8px;
+    margin: 0 -8px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  li.link-row a:hover,
+  li.link-row a:focus-visible {
+    background: var(--accent-soft);
+    outline: none;
+  }
+
+  li.link-row a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  .link-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    object-fit: contain;
+    background: var(--border);
+  }
+
+  .link-icon-placeholder {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    background: var(--border);
+  }
+
+  .link-name {
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--accent);
+    flex: 1;
+  }
+
+  .link-url {
+    font-size: 12px;
+    color: var(--gold);
+    white-space: nowrap;
+    flex-shrink: 0;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .link-disabled {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 12px 8px;
+    margin: 0 -8px;
+  }
+
+  .link-name-disabled {
+    color: var(--muted) !important;
+  }
+
+  #empty-state {
+    display: none;
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  @media (max-width: 520px) {
+    li.link-row a { flex-wrap: wrap; }
+    .link-url { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>애드리절트 업무 링크</h1>
+  </div>
+  <input id="search" type="text" placeholder="이름 검색" autocomplete="off">
+</header>
+
+<main id="main"></main>
+<p id="empty-state">일치하는 링크가 없어요.</p>
+
+<script>
+  // ─────────────────────────────────────────────
+  // 여기 LINKS 배열만 수정하면 링크가 바로 반영됩니다.
+  // category: 섹션 제목
+  // items: { name(링크 이름), url(주소) } — url이 없으면 링크 없이 회색으로 표시됩니다.
+  // ─────────────────────────────────────────────
+  const LINKS = [
+    {
+      category: "애드리절트",
+      items: [
+        { name: "애드리절트 인트라넷", url: "https://adresult.co.kr/adm/" },
+        { name: "애드리절트 홈페이지", url: "https://adresult.kr/" }
+      ]
+    },
+    {
+      category: "업무관련",
+      items: [
+        { name: "매출 대시보드", url: "https://sales-dashboard.adresult05.workers.dev/" },
+        { name: "시트 검색 프로그램", url: "https://sheetsearch-nbc3a7pvnmduxngo7bhm93.streamlit.app/" },
+        { name: "리뷰 모니터링 프로그램", url: "https://review-monitor.streamlit.app/" },
+        { name: "DB 현황 시트", url: "https://docs.google.com/spreadsheets/d/1P0io7KAdieHWklMA74CDxCtYsna1eHONIY1v3rYGwp8/edit?gid=762087128#gid=762087128" }
+      ]
+    },
+    {
+      category: "블로그·카페",
+      items: [
+        { name: "AD-TOTOP 순위체크", url: "http://ad.totop.kr/account/login.php" },
+        { name: "NSIDE 블로그지수확인", url: "https://nside.kr/" },
+        { name: "카페 모니터링" }
+      ]
+    },
+    {
+      category: "AI",
+      items: [
+        { name: "AIRANK", url: "https://airank.lol/" },
+        { name: "오토포스트", url: "https://autopost.thevuemedia.com/" },
+        { name: "스키마웍스" }
+      ]
+    },
+    {
+      category: "숏폼",
+      items: [
+        { name: "숏폼 협업 툴", url: "https://shortform-manager.vercel.app/home" },
+        { name: "숏폼 업로드&계정 관리 시트", url: "https://docs.google.com/spreadsheets/d/1n-Y6Bb3u2wZBnAXeFzu-NdACEp949t6CjdbSh34jN0A/edit?gid=0#gid=0" }
+      ]
+    }
+  ];
+
+  const main = document.getElementById('main');
+  const emptyState = document.getElementById('empty-state');
+
+  function render(filter = "") {
+    main.innerHTML = "";
+    const q = filter.trim().toLowerCase();
+    let anyVisible = false;
+
+    LINKS.forEach(group => {
+      const filtered = q
+        ? group.items.filter(item => item.name.toLowerCase().includes(q))
+        : group.items;
+
+      if (filtered.length === 0) return;
+      anyVisible = true;
+
+      const section = document.createElement('section');
+      section.className = 'category';
+
+      const h2 = document.createElement('h2');
+      h2.textContent = group.category;
+      section.appendChild(h2);
+
+      const ul = document.createElement('ul');
+      ul.className = 'links';
+
+      filtered.forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'link-row';
+        if (item.url) {
+          let hostname = '';
+          try { hostname = new URL(item.url).hostname; } catch (e) {}
+          const faviconSrc = `https://www.google.com/s2/favicons?sz=64&domain=${hostname}`;
+          li.innerHTML = `
+            <a href="${item.url}" target="_blank" rel="noopener">
+              <img class="link-icon" src="${faviconSrc}" alt="" loading="lazy">
+              <span class="link-name">${item.name}</span>
+              <span class="link-url" title="${item.url}">${item.url.replace(/^https?:\/\//, '')}</span>
+            </a>`;
+        } else {
+          li.innerHTML = `
+            <div class="link-disabled">
+              <span class="link-icon-placeholder"></span>
+              <span class="link-name link-name-disabled">${item.name}</span>
+            </div>`;
+        }
+        ul.appendChild(li);
+      });
+
+      section.appendChild(ul);
+      main.appendChild(section);
+    });
+
+    emptyState.style.display = anyVisible ? 'none' : 'block';
+  }
+
+  document.getElementById('search').addEventListener('input', e => render(e.target.value));
+  render();
+</script>
+
+</body>
+</html>
